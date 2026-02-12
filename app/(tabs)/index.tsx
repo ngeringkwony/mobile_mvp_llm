@@ -1,13 +1,17 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { HelloWave } from '@/components/hello-wave';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
+import { ScannerColors } from '@/constants/ScannerColors';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -21,6 +25,21 @@ export default function HomeScreen() {
         <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
       </ThemedView>
+
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Document Scanner</ThemedText>
+        <ThemedText>
+          Scan your documents and use AI to extract text and diagrams.
+        </ThemedText>
+        <TouchableOpacity
+          style={styles.scannerButton}
+          onPress={() => router.push('/scanner')}
+        >
+          <Ionicons name="camera" size={24} color="white" />
+          <ThemedText style={styles.scannerButtonText}>Start Document Scan</ThemedText>
+        </TouchableOpacity>
+      </ThemedView>
+
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
         <ThemedText>
@@ -83,6 +102,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+  },
+  scannerButton: {
+    backgroundColor: ScannerColors.primary,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 15,
+    borderRadius: 12,
+    gap: 10,
+    marginTop: 10,
+  },
+  scannerButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   stepContainer: {
     gap: 8,
